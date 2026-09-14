@@ -1,0 +1,21 @@
+{% extends "places/base.html" %}
+{% block title %}All places{% endblock %}
+{% block content %}
+  <h1>All my favorite places</h1>
+  {% for place in places %}
+    <article class="place-card">
+      <h2>{{ place.name }}</h2>
+      <p>{{ place.place_type }}</p>
+      <p>
+        {% if place.location %}
+          {{ place.location }}
+        {% else %}
+          Secret place👀
+        {% endif %}
+      </p>
+      <p>Rating: {{ place.rating }}</p>
+      <p>{{ place.description|truncatewords:10 }}</p>
+      <p>Added on {{ place.created_at }}</p>
+    </article>
+  {% endfor %}
+{% endblock %}
