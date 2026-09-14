@@ -5,6 +5,7 @@ created on: 14/09/2026
 created by: Daryna Bogaevska
 """
 
+from django.http import Http404
 from django.shortcuts import render
 
 from .data import DEFAULT_PLACES
@@ -34,3 +35,12 @@ def home(request):
 def place_add(request):
     """Show the form for adding a new place."""
     return render(request, "places/place_form.html", {})
+
+
+def place_detail(request, place_id):
+    """Show one place with its full description."""
+    places = get_all_places(request)
+    for place in places:
+        if place["id"] == place_id:
+            return render(request, "places/place_detail.html", {"place": place})
+    raise Http404("Place not found")

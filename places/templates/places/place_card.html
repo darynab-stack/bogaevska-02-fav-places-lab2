@@ -1,0 +1,24 @@
+{% load static %}
+<article class="place-card">
+  <img class="place-photo"
+       src="{% static 'places/default.jpg' %}"
+       alt="{{ place.name }}">
+  <h2 class="place-name">
+    <a href="{% url 'places:place_detail' place.id %}">{{ place.name }}</a>
+  </h2>
+  <p class="place-type">{{ place.place_type }}</p>
+  <p class="place-location">
+    {% if place.location %}
+      {{ place.location }}
+    {% else %}
+      Secret place👀
+    {% endif %}
+  </p>
+  <p class="place-rating">
+    {% for _ in "12345"|make_list %}
+      {% if forloop.counter <= place.rating %}★{% else %}☆{% endif %}
+    {% endfor %}
+  </p>
+  <p class="place-description">{{ place.description|truncatewords:12 }}</p>
+  <p class="place-date">Added on {{ place.created_at }}</p>
+</article>
