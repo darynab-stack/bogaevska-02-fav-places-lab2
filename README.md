@@ -1,108 +1,91 @@
-# web-programming-2026-template
+# My Favorite Places
 
-A reusable Django project with no bundled application, SQLite, and Django's
-standard admin, authentication, sessions, messages, and staticfiles support.
+A small Django site with a list of my favorite places to go out -
+cafés, bookshops and a few secret spots. You can browse the list,
+open any place to read the full description, add your own places,
+or let the site pick one for you.
 
-## Local setup
+## Features
 
-Requires the latest patch release of Python 3.12, 3.13, or 3.14. Run these commands from the project directory containing
-`manage.py`.
+- Home page with a short description and a "Where to go?" button
+  that picks a random place - places with a higher rating are more
+  likely to be chosen
+- List of all places with a preview card for each one
+- Detail page for every place with the full description
+- Form for adding a new place, with validation
+- Places added through the form are stored in the user session,
+  so every visitor has their own list
 
-1. Create and activate a virtual environment:
+## Requirements
 
-   ```bash
-   python -m venv .venv
-   
-   # for linux/macos
-   source .venv/bin/activate
-   # for Windows:
-   .venv\Scripts\activate.ps1 
-   ```
+- Python 3.12
+- Django 6.1.1 (installed from `requirements.txt`)
 
-2. Install dependencies:
+## How to run
 
-   ```bash
-   python -m pip install -r requirements-dev.txt
-   ```
-
-
-3. Apply migrations to create the local SQLite database:
-
-   ```bash
-   python manage.py migrate
-   ```
-
-4. Start the development server:
-
-   ```bash
-   python manage.py runserver
-   ```
-
-## Endpoints
-
-With the server running at `http://127.0.0.1:8000`:
-
-| URL | Behavior |
-| --- | --- |
-| http://127.0.0.1:8000/ | No application homepage; may show Django's development welcome page while `DEBUG = True` |
-| http://127.0.0.1:8000/admin/ | Django admin, available after applying migrations |
-
-With `DEBUG = False`, unmatched URLs such as `/` return HTTP 404.
-
-To create an account for admin login, run this after applying migrations:
+1. Clone the repository and go into the project folder:
 
 ```bash
-python manage.py createsuperuser
+   git clone https://github.com/YOUR-USERNAME/bogaevska-02-fav-places-lab2.git
+   cd bogaevska-02-fav-places-lab2
 ```
 
-## Add your first application
+2. Create and activate a virtual environment:
 
-1. Create an app from the directory containing `manage.py` (replace `myapp`
-   with your application name):
+```bash
+   python -m venv .venv
 
-   ```bash
-   python manage.py startapp myapp
-   ```
+   # for Windows:
+   .venv\Scripts\activate.ps1
+   # for Linux/macOS:
+   source .venv/bin/activate
+```
 
-2. Add its generated configuration class, `myapp.apps.MyappConfig`, to
-   `INSTALLED_APPS` in `mysite/settings.py`.
-3. Define your views and create `myapp/urls.py` with their URL patterns.
-4. Register that URLconf in `mysite/urls.py` using `path()` and `include()`,
-   choosing a URL prefix for the app and retaining the admin route.
+3. Install the dependencies:
 
-See the official Django 6.1 tutorial for
-[views and URL registration](https://docs.djangoproject.com/en/6.1/intro/tutorial01/)
-and [app registration and models](https://docs.djangoproject.com/en/6.1/intro/tutorial02/).
+```bash
+   python -m pip install -r requirements.txt
+```
 
-## Code style and submission verification
+4. Apply the migrations (needed for sessions):
 
-All submissions are required to adhere to PEP-8, Django best practices, and standard HTML/CSS/JS formatting. A deterministic cross-platform utility is provided to help you check and format your code.
+```bash
+   python manage.py migrate
+```
 
-### 1. Verification (Check Mode)
-Before submitting, verify that all files adhere to the required standards:
+5. Start the development server:
+
+```bash
+   python manage.py runserver
+```
+
+6. Open http://127.0.0.1:8000/places/ in your browser.
+
+## Project structure
+
+- `mysite/` - project settings and the root URL configuration
+- `places/` - the application
+  - `data.py` - the fixed list of places shown to every visitor
+  - `views.py` - page logic
+  - `urls.py` - application routes
+  - `forms.py` - the form for adding a new place
+  - `templates/places/` - HTML templates
+  - `static/places/` - CSS and images
+
+## Code style
+
+The project follows PEP 8. To verify before submitting:
 
 ```bash
 python check_submission.py
 ```
 
-If all checks pass, you are ready to submit! If any checks fail, review the error output or run the auto-formatter below.
-
-### 2. Auto-Formatting
-To automatically format Python files, fix safe PEP-8 rules, format Django HTML templates, and format CSS/JS static files:
+To fix formatting automatically:
 
 ```bash
 python check_submission.py --format
 ```
 
-### 3. PyCharm Integration
-If you use PyCharm:
-- **One-Click Run:** In the top-right toolbar run configurations dropdown, select **"Verify Submission"** or **"Format Project"** and click the green **Play** button.
+## Author
 
-## Development only
-
-The included settings use `DEBUG = True`, a development secret key, and a local
-SQLite database. The default mailer uses the console backend: email is printed
-to the process's console instead of being delivered.
-
-This configuration and Django's development server are not suitable for
-production deployment.
+Daryna Bogaevska, AVIS-2, 14/09/2026
