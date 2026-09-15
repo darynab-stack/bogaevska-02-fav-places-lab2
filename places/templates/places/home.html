@@ -1,0 +1,15 @@
+{% extends "places/base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+  <h1>My Favorite Places</h1>
+  <p class="intro">
+    A small collection of places I love going to - cafés, bookshops
+    and a few spots I keep to myself. Browse the whole list, or let
+    the site pick one for you.
+  </p>
+  <a class="suggest-button" href="{% url 'places:home' %}?suggest=1">Where to go?</a>
+  {% if place %}
+    <h2>Today you could go to:</h2>
+    {% include "places/place_card.html" %}
+  {% endif %}
+{% endblock %}
