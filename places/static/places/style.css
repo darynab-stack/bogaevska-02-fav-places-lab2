@@ -85,3 +85,32 @@ body {
 .suggest-button:hover {
   background: #4a4a4a;
 }
+
+.place-form {
+  max-width: 480px;
+}
+
+.place-form input,
+.place-form textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #d8d2c8;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 15px;
+}
+
+.place-form button {
+  padding: 12px 24px;
+  background: #2b2b2b;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.errorlist {
+  color: #c0392b;
+  font-size: 14px;
+}

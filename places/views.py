@@ -6,11 +6,13 @@ created by: Daryna Bogaevska
 """
 
 import random
+from datetime import date
 
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from .data import DEFAULT_PLACES
+from .forms import NewPlaceForm
 
 
 def get_all_places(request):
@@ -42,8 +44,26 @@ def home(request):
 
 
 def place_add(request):
-    """Show the form for adding a new place."""
-    return render(request, "places/place_form.html", {})
+    """Add a new place to the current session list."""
+    if request.method == "POST":
+        form = NewPlaceForm(request.POST)
+        if form.is_valid():
+            user_places = request.session.get("user_places", [])
+            all_places = get_all_places(request)
+            new_place = {
+                "id": max(place["id"] for place in all_places) + 1,
+                "name": form.cleaned_data["name"],
+                "place_type": form.cleaned_data["place_type"],
+                "location": form.cleaned_data["location"],
+                "rating": form.cleaned_data["rating"],
+                "description": form.cleaned_data["description"],
+                "created_at": date.today().isoformat(),
+            }
+            user_places.append(new_place)
+            request.session["user_places"] = user_places
+            return redirect("places:place_list")
+        return render(request, "places/place_form.html", {"form": form})
+    return render(request, "places/place_form.html", {"form": NewPlaceForm()})
 
 
 def place_detail(request, place_id):
