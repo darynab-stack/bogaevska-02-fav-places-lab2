@@ -5,6 +5,8 @@ created on: 14/09/2026
 created by: Daryna Bogaevska
 """
 
+import random
+
 from django.http import Http404
 from django.shortcuts import render
 
@@ -28,8 +30,15 @@ def place_list(request):
 
 
 def home(request):
-    """Show the home page with a random place suggestion."""
-    return render(request, "places/home.html", {})
+    """
+    Show the home page with an optional random place suggestion.
+    """
+    suggestion = None
+    if request.GET.get("suggest"):
+        places = get_all_places(request)
+        weights = [place["rating"] for place in places]
+        suggestion = random.choices(places, weights=weights, k=1)[0]
+    return render(request, "places/home.html", {"place": suggestion})
 
 
 def place_add(request):
